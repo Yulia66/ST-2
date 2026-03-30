@@ -228,3 +228,4 @@ TEST(EarthAndRopeTest, GapIndependence) {
 
     EXPECT_NEAR(gap1, gap2, EPS);
 }
+
