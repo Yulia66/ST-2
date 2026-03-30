@@ -59,7 +59,9 @@ TEST(CircleTest, UpdateFromFerence) {
     c.setFerence(10.0);
     double expectedRadius = 10.0 / (2 * M_PI);
     EXPECT_NEAR(c.getRadius(), expectedRadius, EPS);
-    EXPECT_NEAR(c.getArea(), M_PI * expectedRadius * expectedRadius, EPS);
+    EXPECT_NEAR(c.getArea(),
+                M_PI * expectedRadius * expectedRadius,
+                EPS);
 }
 
 TEST(CircleTest, UpdateFromArea) {
@@ -67,7 +69,9 @@ TEST(CircleTest, UpdateFromArea) {
     c.setArea(50.0);
     double expectedRadius = std::sqrt(50.0 / M_PI);
     EXPECT_NEAR(c.getRadius(), expectedRadius, EPS);
-    EXPECT_NEAR(c.getFerence(), 2 * M_PI * expectedRadius, EPS);
+    EXPECT_NEAR(c.getFerence(),
+                2 * M_PI * expectedRadius,
+                EPS);
 }
 
 TEST(CircleTest, LargeRadius) {
@@ -81,10 +85,10 @@ TEST(CircleTest, MultipleUpdates) {
     Circle c(1.0);
     c.setRadius(2.0);
     EXPECT_NEAR(c.getRadius(), 2.0, EPS);
-    
+
     c.setFerence(20.0);
     EXPECT_NEAR(c.getFerence(), 20.0, EPS);
-    
+
     c.setArea(100.0);
     EXPECT_NEAR(c.getArea(), 100.0, EPS);
 }
@@ -134,7 +138,9 @@ TEST(PoolTest, ConcreteCostCalculation) {
     auto result = solvePool();
     double poolRadius = 3.0;
     double pathWidth = 1.0;
-    double pathArea = M_PI * ((poolRadius + pathWidth) * (poolRadius + pathWidth) - poolRadius * poolRadius);
+    double pathArea = M_PI *
+        ((poolRadius + pathWidth) * (poolRadius + pathWidth) -
+         poolRadius * poolRadius);
     double expectedCost = pathArea * 1000.0;
     EXPECT_NEAR(result.first, expectedCost, 1e-6);
 }
@@ -150,7 +156,8 @@ TEST(PoolTest, FenceCostCalculation) {
 
 TEST(PoolTest, ConcreteCostValue) {
     auto result = solvePool();
-    double expectedConcreteCost = M_PI * ((4.0 * 4.0) - (3.0 * 3.0)) * 1000.0;
+    double expectedConcreteCost =
+        M_PI * ((4.0 * 4.0) - (3.0 * 3.0)) * 1000.0;
     EXPECT_NEAR(result.first, expectedConcreteCost, 1e-6);
 }
 
@@ -190,14 +197,14 @@ TEST(CircleTest, ConsistencyAfterMultipleUpdates) {
     double r1 = c.getRadius();
     double f1 = c.getFerence();
     double a1 = c.getArea();
-    
+
     c.setFerence(f1 + 1.0);
     double r2 = c.getRadius();
     double a2 = c.getArea();
-    
+
     EXPECT_NEAR(c.getFerence(), f1 + 1.0, EPS);
     EXPECT_NEAR(c.getArea(), M_PI * r2 * r2, EPS);
-    
+
     c.setRadius(r2);
     EXPECT_NEAR(c.getRadius(), r2, EPS);
     EXPECT_NEAR(c.getFerence(), f1 + 1.0, EPS);
@@ -211,13 +218,13 @@ TEST(EarthAndRopeTest, GapIndependence) {
     Circle newCircle1(0);
     newCircle1.setFerence(newFerence1);
     double gap1 = newCircle1.getRadius() - earth1.getRadius();
-    
+
     Circle earth2(1000000.0);
     double initialFerence2 = earth2.getFerence();
     double newFerence2 = initialFerence2 + 1.0;
     Circle newCircle2(0);
     newCircle2.setFerence(newFerence2);
     double gap2 = newCircle2.getRadius() - earth2.getRadius();
-    
+
     EXPECT_NEAR(gap1, gap2, EPS);
 }
