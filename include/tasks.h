@@ -1,14 +1,11 @@
-// Copyright 2022 UNN-CS
-
+// Copyright 2025 UNN-CS Team
 #ifndef INCLUDE_TASKS_H_
 #define INCLUDE_TASKS_H_
 
-struct PoolCosts {
-  double concrete_cost;
-  double fence_cost;
-};
+#include <utility>
 
-double solveEarthRopeTask();
-PoolCosts solvePoolTask();
+double solveEarthAndRope();
+
+std::pair<double, double> solvePool();
 
 #endif  // INCLUDE_TASKS_H_
