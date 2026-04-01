@@ -93,25 +93,25 @@ TEST(CircleTest, MultipleUpdates) {
 }
 
 TEST(EarthAndRopeTest, GapPositive) {
-    double gap = solveEarthAndRope();
+    double gap = solveEarthRopeTask();
     EXPECT_GT(gap, 0.0);
     EXPECT_LT(gap, 1.0);
 }
 
 TEST(EarthAndRopeTest, GapFormula) {
-    double gap = solveEarthAndRope();
+    double gap = solveEarthRopeTask();
     double expectedGap = 1.0 / (2 * M_PI);
     EXPECT_NEAR(gap, expectedGap, 1e-6);
 }
 
 TEST(EarthAndRopeTest, GapIndependentOfRadius) {
-    double gap = solveEarthAndRope();
+    double gap = solveEarthRopeTask();
     double expectedGap = 1.0 / (2 * M_PI);
     EXPECT_NEAR(gap, expectedGap, 1e-6);
 }
 
 TEST(EarthAndRopeTest, GapValue) {
-    double gap = solveEarthAndRope();
+    double gap = solveEarthRopeTask();
     EXPECT_NEAR(gap, 0.1591549430918953, 1e-9);
 }
 
@@ -126,42 +126,42 @@ TEST(EarthAndRopeTest, GapWithCustomEarth) {
 }
 
 TEST(PoolTest, PathAreaPositive) {
-    auto result = solvePool();
-    EXPECT_GT(result.first, 0.0);
-    EXPECT_GT(result.second, 0.0);
+    auto result = solvePoolTask();
+    EXPECT_GT(result.concrete_cost, 0.0);
+    EXPECT_GT(result.fence_cost, 0.0);
 }
 
 TEST(PoolTest, ConcreteCostCalculation) {
-    auto result = solvePool();
+    auto result = solvePoolTask();
     double poolRadius = 3.0;
     double pathWidth = 1.0;
     double pathArea = M_PI *
         ((poolRadius + pathWidth) * (poolRadius + pathWidth) -
          poolRadius * poolRadius);
     double expectedCost = pathArea * 1000.0;
-    EXPECT_NEAR(result.first, expectedCost, 1e-6);
+    EXPECT_NEAR(result.concrete_cost, expectedCost, 1e-6);
 }
 
 TEST(PoolTest, FenceCostCalculation) {
-    auto result = solvePool();
+    auto result = solvePoolTask();
     double poolRadius = 3.0;
     double pathWidth = 1.0;
     double fenceLength = 2 * M_PI * (poolRadius + pathWidth);
     double expectedCost = fenceLength * 2000.0;
-    EXPECT_NEAR(result.second, expectedCost, 1e-6);
+    EXPECT_NEAR(result.fence_cost, expectedCost, 1e-6);
 }
 
 TEST(PoolTest, ConcreteCostValue) {
-    auto result = solvePool();
+    auto result = solvePoolTask();
     double expectedConcreteCost =
         M_PI * ((4.0 * 4.0) - (3.0 * 3.0)) * 1000.0;
-    EXPECT_NEAR(result.first, expectedConcreteCost, 1e-6);
+    EXPECT_NEAR(result.concrete_cost, expectedConcreteCost, 1e-6);
 }
 
 TEST(PoolTest, FenceCostValue) {
-    auto result = solvePool();
+    auto result = solvePoolTask();
     double expectedFenceCost = 2 * M_PI * 4.0 * 2000.0;
-    EXPECT_NEAR(result.second, expectedFenceCost, 1e-6);
+    EXPECT_NEAR(result.fence_cost, expectedFenceCost, 1e-6);
 }
 
 TEST(CircleTest, SetRadiusZero) {
