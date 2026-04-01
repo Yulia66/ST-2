@@ -4,6 +4,7 @@
 #include "circle.h"
 
 #include <cmath>
+
 #include <utility>
 
 const double EARTH_RADIUS_KM = 6378.1;
