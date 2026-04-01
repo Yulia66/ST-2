@@ -14,7 +14,7 @@ constexpr double kFenceCostPerMeter = 2000.0;
 
 double solveEarthRopeTask() {
   Circle earth(kEarthRadius);
-  Circle newEarth;
+  Circle newEarth(0.0);
   newEarth.setFerence(earth.getFerence() + kAdditionalRope);
   return newEarth.getRadius() - earth.getRadius();
 }

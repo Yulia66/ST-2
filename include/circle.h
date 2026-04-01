@@ -11,6 +11,7 @@ class Circle {
   double area;
 
  public:
+  Circle();
   explicit Circle(double r);
 
   void setRadius(double r);
