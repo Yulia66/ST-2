@@ -7,7 +7,6 @@
 
 const double EPS = 1e-9;
 
-
 TEST(CircleTest, ConstructorAndGetters) {
     Circle c(5.0);
     EXPECT_NEAR(c.getRadius(), 5.0, EPS);
@@ -93,7 +92,6 @@ TEST(CircleTest, MultipleUpdates) {
     EXPECT_NEAR(c.getArea(), 100.0, EPS);
 }
 
-
 TEST(EarthAndRopeTest, GapPositive) {
     double gap = solveEarthAndRope();
     EXPECT_GT(gap, 0.0);
@@ -126,7 +124,6 @@ TEST(EarthAndRopeTest, GapWithCustomEarth) {
     double gap = newCircle.getRadius() - earth.getRadius();
     EXPECT_NEAR(gap, 1.0 / (2 * M_PI), 1e-6);
 }
-
 
 TEST(PoolTest, PathAreaPositive) {
     auto result = solvePool();
@@ -166,7 +163,6 @@ TEST(PoolTest, FenceCostValue) {
     double expectedFenceCost = 2 * M_PI * 4.0 * 2000.0;
     EXPECT_NEAR(result.second, expectedFenceCost, 1e-6);
 }
-
 
 TEST(CircleTest, SetRadiusZero) {
     Circle c(5.0);
@@ -228,4 +224,3 @@ TEST(EarthAndRopeTest, GapIndependence) {
 
     EXPECT_NEAR(gap1, gap2, EPS);
 }
-

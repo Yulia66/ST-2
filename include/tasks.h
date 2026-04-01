@@ -5,7 +5,6 @@
 #include <utility>
 
 double solveEarthAndRope();
-
 std::pair<double, double> solvePool();
 
 #endif  // INCLUDE_TASKS_H_
