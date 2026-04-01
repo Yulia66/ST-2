@@ -1,6 +1,8 @@
 // Copyright 2025 UNN-CS Team
 #include "tasks.h"
+
 #include "circle.h"
+
 #include <cmath>
 #include <utility>
 
