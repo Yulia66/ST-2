@@ -1,31 +1,30 @@
-// Copyright 2022 UNN-CS
-
+// Copyright 2025 UNN-IASR
 #include "tasks.h"
 #include "circle.h"
 
 namespace {
-constexpr double kEarthRadius = 6378100.0;
-constexpr double kAdditionalRope = 1.0;
-constexpr double kPoolRadius = 3.0;
-constexpr double kPathWidth = 1.0;
-constexpr double kConcreteCostPerSquareMeter = 1000.0;
-constexpr double kFenceCostPerMeter = 2000.0;
-}  // namespace
-
-double solveEarthRopeTask() {
-  Circle earth(kEarthRadius);
-  Circle newEarth(0.0);
-  newEarth.setFerence(earth.getFerence() + kAdditionalRope);
-  return newEarth.getRadius() - earth.getRadius();
+constexpr double EARTH_RADIUS_METERS = 6378100.0;
+constexpr double ROPE_EXTRA = 1.0;
+constexpr double POOL_RADIUS = 3.0;
+constexpr double WALK_WIDTH = 1.0;
+constexpr double CONCRETE_PRICE = 1000.0;
+constexpr double FENCE_PRICE = 2000.0;
 }
 
-PoolCosts solvePoolTask() {
-  Circle pool(kPoolRadius);
-  Circle outer(pool.getRadius() + kPathWidth);
+double computeEarthGap() {
+  Circle earthSphere(EARTH_RADIUS_METERS);
+  Circle enlargedSphere(0.0);
+  enlargedSphere.assignCircumference(earthSphere.retrieveCircumference() + ROPE_EXTRA);
+  return enlargedSphere.retrieveRadius() - earthSphere.retrieveRadius();
+}
 
-  const double path_area = outer.getArea() - pool.getArea();
-  const double concrete_cost = path_area * kConcreteCostPerSquareMeter;
-  const double fence_cost = outer.getFerence() * kFenceCostPerMeter;
+CostReport computePoolExpenses() {
+  Circle poolCircle(POOL_RADIUS);
+  Circle outerCircle(poolCircle.retrieveRadius() + WALK_WIDTH);
 
-  return {concrete_cost, fence_cost};
+  double walkwayArea = outerCircle.retrieveArea() - poolCircle.retrieveArea();
+  double concreteExpense = walkwayArea * CONCRETE_PRICE;
+  double fencingExpense = outerCircle.retrieveCircumference() * FENCE_PRICE;
+
+  return {concreteExpense, fencingExpense};
 }

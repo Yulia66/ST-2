@@ -1,55 +1,55 @@
-// Copyright 2022 UNN-CS
+// Copyright 2025 UNN-IASR
 #include "circle.h"
 #include <cmath>
 
-const double PI = 3.14159265358979323846;
+const double PI_VAL = 3.14159265358979323846;
 
-Circle::Circle() : radius(0.0) {
-    updateFromRadius();
+Circle::Circle() : r_val(0.0) {
+    refreshFromRadius();
 }
 
-Circle::Circle(double r) : radius(r) {
-    updateFromRadius();
+Circle::Circle(double r) : r_val(r) {
+    refreshFromRadius();
 }
 
-void Circle::setRadius(double r) {
-    radius = r;
-    updateFromRadius();
+void Circle::assignRadius(double r) {
+    r_val = r;
+    refreshFromRadius();
 }
 
-void Circle::setFerence(double f) {
-    ference = f;
-    updateFromFerence();
+void Circle::assignCircumference(double c) {
+    circ_val = c;
+    refreshFromCircumference();
 }
 
-void Circle::setArea(double a) {
-    area = a;
-    updateFromArea();
+void Circle::assignArea(double a) {
+    sq_val = a;
+    refreshFromArea();
 }
 
-double Circle::getRadius() const {
-    return radius;
+double Circle::retrieveRadius() const {
+    return r_val;
 }
 
-double Circle::getFerence() const {
-    return ference;
+double Circle::retrieveCircumference() const {
+    return circ_val;
 }
 
-double Circle::getArea() const {
-    return area;
+double Circle::retrieveArea() const {
+    return sq_val;
 }
 
-void Circle::updateFromRadius() {
-    ference = 2 * PI * radius;
-    area = PI * radius * radius;
+void Circle::refreshFromRadius() {
+    circ_val = 2.0 * PI_VAL * r_val;
+    sq_val = PI_VAL * r_val * r_val;
 }
 
-void Circle::updateFromFerence() {
-    radius = ference / (2 * PI);
-    area = PI * radius * radius;
+void Circle::refreshFromCircumference() {
+    r_val = circ_val / (2.0 * PI_VAL);
+    sq_val = PI_VAL * r_val * r_val;
 }
 
-void Circle::updateFromArea() {
-    radius = std::sqrt(area / PI);
-    ference = 2 * PI * radius;
+void Circle::refreshFromArea() {
+    r_val = std::sqrt(sq_val / PI_VAL);
+    circ_val = 2.0 * PI_VAL * r_val;
 }

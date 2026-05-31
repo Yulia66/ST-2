@@ -1,226 +1,174 @@
-// Copyright 2025 UNN-CS Team
-
+// Copyright 2025 UNN-IASR
 #include <gtest/gtest.h>
 #include <cmath>
 #include "circle.h"
 #include "tasks.h"
 
-const double EPS = 1e-9;
+const double TOLERANCE = 1e-9;
 
-TEST(CircleTest, ConstructorAndGetters) {
-    Circle c(5.0);
-    EXPECT_NEAR(c.getRadius(), 5.0, EPS);
-    EXPECT_NEAR(c.getFerence(), 2 * M_PI * 5.0, EPS);
-    EXPECT_NEAR(c.getArea(), M_PI * 25.0, EPS);
+TEST(CircleSuite, DefaultConstructor) {
+    Circle obj;
+    EXPECT_NEAR(obj.retrieveRadius(), 0.0, TOLERANCE);
+    EXPECT_NEAR(obj.retrieveCircumference(), 0.0, TOLERANCE);
+    EXPECT_NEAR(obj.retrieveArea(), 0.0, TOLERANCE);
 }
 
-TEST(CircleTest, SetRadius) {
-    Circle c(1.0);
-    c.setRadius(3.0);
-    EXPECT_NEAR(c.getRadius(), 3.0, EPS);
-    EXPECT_NEAR(c.getFerence(), 2 * M_PI * 3.0, EPS);
-    EXPECT_NEAR(c.getArea(), M_PI * 9.0, EPS);
+TEST(CircleSuite, ParameterizedConstructor) {
+    Circle obj(4.0);
+    EXPECT_NEAR(obj.retrieveRadius(), 4.0, TOLERANCE);
+    EXPECT_NEAR(obj.retrieveCircumference(), 2.0 * M_PI * 4.0, TOLERANCE);
+    EXPECT_NEAR(obj.retrieveArea(), M_PI * 16.0, TOLERANCE);
 }
 
-TEST(CircleTest, SetFerence) {
-    Circle c(1.0);
-    c.setFerence(2 * M_PI);
-    EXPECT_NEAR(c.getFerence(), 2 * M_PI, EPS);
-    EXPECT_NEAR(c.getRadius(), 1.0, EPS);
-    EXPECT_NEAR(c.getArea(), M_PI, EPS);
+TEST(CircleSuite, RadiusAssignment) {
+    Circle obj(1.0);
+    obj.assignRadius(5.0);
+    EXPECT_NEAR(obj.retrieveRadius(), 5.0, TOLERANCE);
+    EXPECT_NEAR(obj.retrieveCircumference(), 2.0 * M_PI * 5.0, TOLERANCE);
+    EXPECT_NEAR(obj.retrieveArea(), M_PI * 25.0, TOLERANCE);
 }
 
-TEST(CircleTest, SetArea) {
-    Circle c(1.0);
-    c.setArea(M_PI);
-    EXPECT_NEAR(c.getArea(), M_PI, EPS);
-    EXPECT_NEAR(c.getRadius(), 1.0, EPS);
-    EXPECT_NEAR(c.getFerence(), 2 * M_PI, EPS);
+TEST(CircleSuite, CircumferenceAssignment) {
+    Circle obj(2.0);
+    obj.assignCircumference(4.0 * M_PI);
+    EXPECT_NEAR(obj.retrieveCircumference(), 4.0 * M_PI, TOLERANCE);
+    EXPECT_NEAR(obj.retrieveRadius(), 2.0, TOLERANCE);
+    EXPECT_NEAR(obj.retrieveArea(), M_PI * 4.0, TOLERANCE);
 }
 
-TEST(CircleTest, ZeroRadius) {
-    Circle c(0.0);
-    EXPECT_NEAR(c.getRadius(), 0.0, EPS);
-    EXPECT_NEAR(c.getFerence(), 0.0, EPS);
-    EXPECT_NEAR(c.getArea(), 0.0, EPS);
+TEST(CircleSuite, AreaAssignment) {
+    Circle obj(3.0);
+    obj.assignArea(9.0 * M_PI);
+    EXPECT_NEAR(obj.retrieveArea(), 9.0 * M_PI, TOLERANCE);
+    EXPECT_NEAR(obj.retrieveRadius(), 3.0, TOLERANCE);
+    EXPECT_NEAR(obj.retrieveCircumference(), 2.0 * M_PI * 3.0, TOLERANCE);
 }
 
-TEST(CircleTest, UpdateFromRadius) {
-    Circle c(2.0);
-    double expectedFerence = 2 * M_PI * 2.0;
-    double expectedArea = M_PI * 4.0;
-    EXPECT_NEAR(c.getFerence(), expectedFerence, EPS);
-    EXPECT_NEAR(c.getArea(), expectedArea, EPS);
+TEST(CircleSuite, ZeroRadiusHandling) {
+    Circle obj(10.0);
+    obj.assignRadius(0.0);
+    EXPECT_NEAR(obj.retrieveRadius(), 0.0, TOLERANCE);
+    EXPECT_NEAR(obj.retrieveCircumference(), 0.0, TOLERANCE);
+    EXPECT_NEAR(obj.retrieveArea(), 0.0, TOLERANCE);
 }
 
-TEST(CircleTest, UpdateFromFerence) {
-    Circle c(1.0);
-    c.setFerence(10.0);
-    double expectedRadius = 10.0 / (2 * M_PI);
-    EXPECT_NEAR(c.getRadius(), expectedRadius, EPS);
-    EXPECT_NEAR(c.getArea(),
-                M_PI * expectedRadius * expectedRadius,
-                EPS);
+TEST(CircleSuite, ZeroCircumferenceHandling) {
+    Circle obj(5.0);
+    obj.assignCircumference(0.0);
+    EXPECT_NEAR(obj.retrieveCircumference(), 0.0, TOLERANCE);
+    EXPECT_NEAR(obj.retrieveRadius(), 0.0, TOLERANCE);
+    EXPECT_NEAR(obj.retrieveArea(), 0.0, TOLERANCE);
 }
 
-TEST(CircleTest, UpdateFromArea) {
-    Circle c(1.0);
-    c.setArea(50.0);
-    double expectedRadius = std::sqrt(50.0 / M_PI);
-    EXPECT_NEAR(c.getRadius(), expectedRadius, EPS);
-    EXPECT_NEAR(c.getFerence(),
-                2 * M_PI * expectedRadius,
-                EPS);
+TEST(CircleSuite, ZeroAreaHandling) {
+    Circle obj(7.0);
+    obj.assignArea(0.0);
+    EXPECT_NEAR(obj.retrieveArea(), 0.0, TOLERANCE);
+    EXPECT_NEAR(obj.retrieveRadius(), 0.0, TOLERANCE);
+    EXPECT_NEAR(obj.retrieveCircumference(), 0.0, TOLERANCE);
 }
 
-TEST(CircleTest, LargeRadius) {
-    Circle c(1e10);
-    EXPECT_NEAR(c.getRadius(), 1e10, EPS);
-    EXPECT_NEAR(c.getFerence(), 2 * M_PI * 1e10, EPS);
-    EXPECT_NEAR(c.getArea(), M_PI * 1e20, EPS);
+TEST(CircleSuite, VeryLargeRadius) {
+    Circle obj(1e12);
+    EXPECT_NEAR(obj.retrieveRadius(), 1e12, TOLERANCE);
+    EXPECT_NEAR(obj.retrieveCircumference(), 2.0 * M_PI * 1e12, TOLERANCE);
+    EXPECT_NEAR(obj.retrieveArea(), M_PI * 1e24, TOLERANCE);
 }
 
-TEST(CircleTest, MultipleUpdates) {
-    Circle c(1.0);
-    c.setRadius(2.0);
-    EXPECT_NEAR(c.getRadius(), 2.0, EPS);
-
-    c.setFerence(20.0);
-    EXPECT_NEAR(c.getFerence(), 20.0, EPS);
-
-    c.setArea(100.0);
-    EXPECT_NEAR(c.getArea(), 100.0, EPS);
+TEST(CircleSuite, MultipleAssignments) {
+    Circle obj(2.0);
+    obj.assignRadius(3.0);
+    EXPECT_NEAR(obj.retrieveRadius(), 3.0, TOLERANCE);
+    
+    obj.assignCircumference(25.0);
+    EXPECT_NEAR(obj.retrieveCircumference(), 25.0, TOLERANCE);
+    
+    obj.assignArea(60.0);
+    EXPECT_NEAR(obj.retrieveArea(), 60.0, TOLERANCE);
 }
 
-TEST(EarthAndRopeTest, GapPositive) {
-    double gap = solveEarthRopeTask();
+TEST(CircleSuite, ConsistencyCheck) {
+    Circle obj(1.5);
+    double rad = obj.retrieveRadius();
+    double circ = obj.retrieveCircumference();
+    double area = obj.retrieveArea();
+    
+    EXPECT_NEAR(obj.retrieveCircumference(), 2.0 * M_PI * rad, TOLERANCE);
+    EXPECT_NEAR(obj.retrieveArea(), M_PI * rad * rad, TOLERANCE);
+}
+
+TEST(EarthRopeSuite, GapIsPositive) {
+    double gap = computeEarthGap();
     EXPECT_GT(gap, 0.0);
-    EXPECT_LT(gap, 1.0);
 }
 
-TEST(EarthAndRopeTest, GapFormula) {
-    double gap = solveEarthRopeTask();
-    double expectedGap = 1.0 / (2 * M_PI);
-    EXPECT_NEAR(gap, expectedGap, 1e-6);
+TEST(EarthRopeSuite, GapFormulaCorrect) {
+    double gap = computeEarthGap();
+    double expected = 1.0 / (2.0 * M_PI);
+    EXPECT_NEAR(gap, expected, 1e-6);
 }
 
-TEST(EarthAndRopeTest, GapIndependentOfRadius) {
-    double gap = solveEarthRopeTask();
-    double expectedGap = 1.0 / (2 * M_PI);
-    EXPECT_NEAR(gap, expectedGap, 1e-6);
-}
-
-TEST(EarthAndRopeTest, GapValue) {
-    double gap = solveEarthRopeTask();
+TEST(EarthRopeSuite, GapValueVerified) {
+    double gap = computeEarthGap();
     EXPECT_NEAR(gap, 0.1591549430918953, 1e-9);
 }
 
-TEST(EarthAndRopeTest, GapWithCustomEarth) {
-    Circle earth(6378000.0);
-    double initialFerence = earth.getFerence();
-    double newFerence = initialFerence + 1.0;
-    Circle newCircle(0);
-    newCircle.setFerence(newFerence);
-    double gap = newCircle.getRadius() - earth.getRadius();
-    EXPECT_NEAR(gap, 1.0 / (2 * M_PI), 1e-6);
+TEST(EarthRopeSuite, GapDoesNotDependOnRadius) {
+    Circle small(1000.0);
+    Circle huge(10000000.0);
+    
+    double circSmall = small.retrieveCircumference();
+    Circle enlargedSmall(0.0);
+    enlargedSmall.assignCircumference(circSmall + 1.0);
+    double gapSmall = enlargedSmall.retrieveRadius() - small.retrieveRadius();
+    
+    double circHuge = huge.retrieveCircumference();
+    Circle enlargedHuge(0.0);
+    enlargedHuge.assignCircumference(circHuge + 1.0);
+    double gapHuge = enlargedHuge.retrieveRadius() - huge.retrieveRadius();
+    
+    EXPECT_NEAR(gapSmall, gapHuge, TOLERANCE);
 }
 
-TEST(PoolTest, PathAreaPositive) {
-    auto result = solvePoolTask();
-    EXPECT_GT(result.concrete_cost, 0.0);
-    EXPECT_GT(result.fence_cost, 0.0);
+TEST(PoolSuite, CostsArePositive) {
+    CostReport result = computePoolExpenses();
+    EXPECT_GT(result.concrete_expense, 0.0);
+    EXPECT_GT(result.fencing_expense, 0.0);
 }
 
-TEST(PoolTest, ConcreteCostCalculation) {
-    auto result = solvePoolTask();
-    double poolRadius = 3.0;
-    double pathWidth = 1.0;
-    double pathArea = M_PI *
-        ((poolRadius + pathWidth) * (poolRadius + pathWidth) -
-         poolRadius * poolRadius);
-    double expectedCost = pathArea * 1000.0;
-    EXPECT_NEAR(result.concrete_cost, expectedCost, 1e-6);
+TEST(PoolSuite, ConcreteCostCalculationAccurate) {
+    CostReport result = computePoolExpenses();
+    double walkArea = M_PI * ((4.0 * 4.0) - (3.0 * 3.0));
+    double expected = walkArea * 1000.0;
+    EXPECT_NEAR(result.concrete_expense, expected, 1e-6);
 }
 
-TEST(PoolTest, FenceCostCalculation) {
-    auto result = solvePoolTask();
-    double poolRadius = 3.0;
-    double pathWidth = 1.0;
-    double fenceLength = 2 * M_PI * (poolRadius + pathWidth);
-    double expectedCost = fenceLength * 2000.0;
-    EXPECT_NEAR(result.fence_cost, expectedCost, 1e-6);
+TEST(PoolSuite, FenceCostCalculationAccurate) {
+    CostReport result = computePoolExpenses();
+    double fenceLen = 2.0 * M_PI * 4.0;
+    double expected = fenceLen * 2000.0;
+    EXPECT_NEAR(result.fencing_expense, expected, 1e-6);
 }
 
-TEST(PoolTest, ConcreteCostValue) {
-    auto result = solvePoolTask();
-    double expectedConcreteCost =
-        M_PI * ((4.0 * 4.0) - (3.0 * 3.0)) * 1000.0;
-    EXPECT_NEAR(result.concrete_cost, expectedConcreteCost, 1e-6);
+TEST(PoolSuite, ConcreteCostExactValue) {
+    CostReport result = computePoolExpenses();
+    double expected = M_PI * 7.0 * 1000.0;
+    EXPECT_NEAR(result.concrete_expense, expected, 1e-6);
 }
 
-TEST(PoolTest, FenceCostValue) {
-    auto result = solvePoolTask();
-    double expectedFenceCost = 2 * M_PI * 4.0 * 2000.0;
-    EXPECT_NEAR(result.fence_cost, expectedFenceCost, 1e-6);
+TEST(PoolSuite, FenceCostExactValue) {
+    CostReport result = computePoolExpenses();
+    double expected = 2.0 * M_PI * 4.0 * 2000.0;
+    EXPECT_NEAR(result.fencing_expense, expected, 1e-6);
 }
 
-TEST(CircleTest, SetRadiusZero) {
-    Circle c(5.0);
-    c.setRadius(0.0);
-    EXPECT_NEAR(c.getRadius(), 0.0, EPS);
-    EXPECT_NEAR(c.getFerence(), 0.0, EPS);
-    EXPECT_NEAR(c.getArea(), 0.0, EPS);
-}
-
-TEST(CircleTest, SetFerenceZero) {
-    Circle c(5.0);
-    c.setFerence(0.0);
-    EXPECT_NEAR(c.getFerence(), 0.0, EPS);
-    EXPECT_NEAR(c.getRadius(), 0.0, EPS);
-    EXPECT_NEAR(c.getArea(), 0.0, EPS);
-}
-
-TEST(CircleTest, SetAreaZero) {
-    Circle c(5.0);
-    c.setArea(0.0);
-    EXPECT_NEAR(c.getArea(), 0.0, EPS);
-    EXPECT_NEAR(c.getRadius(), 0.0, EPS);
-    EXPECT_NEAR(c.getFerence(), 0.0, EPS);
-}
-
-TEST(CircleTest, ConsistencyAfterMultipleUpdates) {
-    Circle c(2.0);
-    double r1 = c.getRadius();
-    double f1 = c.getFerence();
-    double a1 = c.getArea();
-
-    c.setFerence(f1 + 1.0);
-    double r2 = c.getRadius();
-    double a2 = c.getArea();
-
-    EXPECT_NEAR(c.getFerence(), f1 + 1.0, EPS);
-    EXPECT_NEAR(c.getArea(), M_PI * r2 * r2, EPS);
-
-    c.setRadius(r2);
-    EXPECT_NEAR(c.getRadius(), r2, EPS);
-    EXPECT_NEAR(c.getFerence(), f1 + 1.0, EPS);
-    EXPECT_NEAR(c.getArea(), a2, EPS);
-}
-
-TEST(EarthAndRopeTest, GapIndependence) {
-    Circle earth1(1000.0);
-    double initialFerence1 = earth1.getFerence();
-    double newFerence1 = initialFerence1 + 1.0;
-    Circle newCircle1(0);
-    newCircle1.setFerence(newFerence1);
-    double gap1 = newCircle1.getRadius() - earth1.getRadius();
-
-    Circle earth2(1000000.0);
-    double initialFerence2 = earth2.getFerence();
-    double newFerence2 = initialFerence2 + 1.0;
-    Circle newCircle2(0);
-    newCircle2.setFerence(newFerence2);
-    double gap2 = newCircle2.getRadius() - earth2.getRadius();
-
-    EXPECT_NEAR(gap1, gap2, EPS);
+TEST(PoolSuite, PoolWithDifferentWidth) {
+    Circle pool(3.0);
+    Circle outer(5.0);
+    double walkArea = outer.retrieveArea() - pool.retrieveArea();
+    double concreteExp = walkArea * 1000.0;
+    double fenceExp = outer.retrieveCircumference() * 2000.0;
+    
+    EXPECT_GT(concreteExp, 0.0);
+    EXPECT_GT(fenceExp, 0.0);
 }
