@@ -115,10 +115,11 @@ TEST(EarthRopeSuite, GapDoesNotDependOnRadius) {
     double gap1 = computeEarthGap();
 
     Circle customEarth(5000.0);
-    double initialFerence = customEarth.retrieveCircumference();
+    double initFer = customEarth.retrieveCircumference();
     Circle enlargedCustom(0.0);
-    enlargedCustom.assignCircumference(initialFerence + 1.0);
-    double gap2 = enlargedCustom.retrieveRadius() - customEarth.retrieveRadius();
+    enlargedCustom.assignCircumference(initFer + 1.0);
+    double gap2 = enlargedCustom.retrieveRadius() -
+                  customEarth.retrieveRadius();
 
     EXPECT_NEAR(gap1, gap2, 1e-8);
 }
