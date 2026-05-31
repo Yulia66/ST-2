@@ -90,8 +90,6 @@ TEST(CircleSuite, MultipleAssignments) {
 TEST(CircleSuite, ConsistencyCheck) {
     Circle obj(1.5);
     double rad = obj.retrieveRadius();
-    double circ = obj.retrieveCircumference();
-    double area = obj.retrieveArea();
 
     EXPECT_NEAR(obj.retrieveCircumference(), 2.0 * M_PI * rad, TOLERANCE);
     EXPECT_NEAR(obj.retrieveArea(), M_PI * rad * rad, TOLERANCE);
