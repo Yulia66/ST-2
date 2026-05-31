@@ -114,20 +114,15 @@ TEST(EarthRopeSuite, GapValueVerified) {
 }
 
 TEST(EarthRopeSuite, GapDoesNotDependOnRadius) {
-    Circle small(1000.0);
-    Circle huge(10000000.0);
+    double gap1 = computeEarthGap();
 
-    double circSmall = small.retrieveCircumference();
-    Circle enlargedSmall(0.0);
-    enlargedSmall.assignCircumference(circSmall + 1.0);
-    double gapSmall = enlargedSmall.retrieveRadius() - small.retrieveRadius();
+    Circle customEarth(5000.0);
+    double initialFerence = customEarth.retrieveCircumference();
+    Circle enlargedCustom(0.0);
+    enlargedCustom.assignCircumference(initialFerence + 1.0);
+    double gap2 = enlargedCustom.retrieveRadius() - customEarth.retrieveRadius();
 
-    double circHuge = huge.retrieveCircumference();
-    Circle enlargedHuge(0.0);
-    enlargedHuge.assignCircumference(circHuge + 1.0);
-    double gapHuge = enlargedHuge.retrieveRadius() - huge.retrieveRadius();
-
-    EXPECT_NEAR(gapSmall, gapHuge, TOLERANCE);
+    EXPECT_NEAR(gap1, gap2, 1e-8);
 }
 
 TEST(PoolSuite, CostsArePositive) {
@@ -172,3 +167,4 @@ TEST(PoolSuite, PoolWithDifferentWidth) {
     EXPECT_GT(concreteExp, 0.0);
     EXPECT_GT(fenceExp, 0.0);
 }
+
