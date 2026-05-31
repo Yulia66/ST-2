@@ -79,10 +79,10 @@ TEST(CircleSuite, MultipleAssignments) {
     Circle obj(2.0);
     obj.assignRadius(3.0);
     EXPECT_NEAR(obj.retrieveRadius(), 3.0, TOLERANCE);
-    
+
     obj.assignCircumference(25.0);
     EXPECT_NEAR(obj.retrieveCircumference(), 25.0, TOLERANCE);
-    
+
     obj.assignArea(60.0);
     EXPECT_NEAR(obj.retrieveArea(), 60.0, TOLERANCE);
 }
@@ -92,7 +92,7 @@ TEST(CircleSuite, ConsistencyCheck) {
     double rad = obj.retrieveRadius();
     double circ = obj.retrieveCircumference();
     double area = obj.retrieveArea();
-    
+
     EXPECT_NEAR(obj.retrieveCircumference(), 2.0 * M_PI * rad, TOLERANCE);
     EXPECT_NEAR(obj.retrieveArea(), M_PI * rad * rad, TOLERANCE);
 }
@@ -116,17 +116,17 @@ TEST(EarthRopeSuite, GapValueVerified) {
 TEST(EarthRopeSuite, GapDoesNotDependOnRadius) {
     Circle small(1000.0);
     Circle huge(10000000.0);
-    
+
     double circSmall = small.retrieveCircumference();
     Circle enlargedSmall(0.0);
     enlargedSmall.assignCircumference(circSmall + 1.0);
     double gapSmall = enlargedSmall.retrieveRadius() - small.retrieveRadius();
-    
+
     double circHuge = huge.retrieveCircumference();
     Circle enlargedHuge(0.0);
     enlargedHuge.assignCircumference(circHuge + 1.0);
     double gapHuge = enlargedHuge.retrieveRadius() - huge.retrieveRadius();
-    
+
     EXPECT_NEAR(gapSmall, gapHuge, TOLERANCE);
 }
 
@@ -168,7 +168,7 @@ TEST(PoolSuite, PoolWithDifferentWidth) {
     double walkArea = outer.retrieveArea() - pool.retrieveArea();
     double concreteExp = walkArea * 1000.0;
     double fenceExp = outer.retrieveCircumference() * 2000.0;
-    
+
     EXPECT_GT(concreteExp, 0.0);
     EXPECT_GT(fenceExp, 0.0);
 }

@@ -14,7 +14,8 @@ constexpr double FENCE_PRICE = 2000.0;
 double computeEarthGap() {
   Circle earthSphere(EARTH_RADIUS_METERS);
   Circle enlargedSphere(0.0);
-  enlargedSphere.assignCircumference(earthSphere.retrieveCircumference() + ROPE_EXTRA);
+  enlargedSphere.assignCircumference(
+      earthSphere.retrieveCircumference() + ROPE_EXTRA);
   return enlargedSphere.retrieveRadius() - earthSphere.retrieveRadius();
 }
 
